@@ -5,17 +5,17 @@
 int menu() {
     int opcion;
     do {
-        printf("\nMenú de opciones:\n");
+        printf("\nMenu de opciones:\n");
         printf("1. Crear factura\n");
         printf("2. Leer facturas\n");
         printf("3. Editar factura\n");
         printf("4. Eliminar factura\n");
-        printf("5. Consultar factura por cédula\n");
+        printf("5. Consultar factura por cedula\n");
         printf("6. Salir\n");
         printf(">> ");
         scanf("%d", &opcion);
         if (opcion < 1 || opcion > 6) {
-            printf("Por favor, ingrese una opción válida.\n");
+            printf("Por favor, ingrese una opción valida.\n");
         }
     } while (opcion < 1 || opcion > 6);
     return opcion;
@@ -267,17 +267,17 @@ void mostrarDetalleFactura() {
     }
 
     do {
-        printf("Ingrese la cédula de la factura que desea consultar: ");
+        printf("Ingrese la cedula de la factura que desea consultar: ");
         scanf("%d", &cedulaBuscar);
         if (cedulaBuscar < 0) {
-            printf("La cédula no puede ser negativa. Inténtelo de nuevo.\n");
+            printf("La cedula no puede ser negativa. Intentelo de nuevo.\n");
         }
     } while (cedulaBuscar < 0);
 
     while (fread(&factura, sizeof(struct Factura), 1, file)) {
         if (factura.cedula == cedulaBuscar) {
             printf("Factura encontrada:\n");
-            printf("Cédula del cliente: %d\n", factura.cedula);
+            printf("Cedula del cliente: %d\n", factura.cedula);
             printf("Nombre del cliente: %s\n", factura.nombre);
             printf("Productos:\n");
             printf("------------------------------------------------------------\n");
@@ -302,6 +302,6 @@ void mostrarDetalleFactura() {
     fclose(file);
 
     if (!encontrado) {
-        printf("Factura con cédula %d no encontrada.\n", cedulaBuscar);
+        printf("Factura con cedula %d no encontrada.\n", cedulaBuscar);
     }
 }

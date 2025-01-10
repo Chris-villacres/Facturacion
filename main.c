@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include "funciones.h"
+
 int main() {
     int opcion;
     do {
@@ -30,3 +33,4 @@ int main() {
 
     return 0;
 }
+

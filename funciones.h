@@ -25,5 +25,6 @@ void readFactura();
 void editarFactura();
 void eliminarFactura();
 void exportarFacturas();
+void mostrarDetalleFactura();
 
 #endif

@@ -5,17 +5,19 @@
 int menu() {
     int opcion;
     do {
+        printf("\nMenú de opciones:\n");
         printf("1. Crear factura\n");
         printf("2. Leer facturas\n");
         printf("3. Editar factura\n");
         printf("4. Eliminar factura\n");
-        printf("5. Salir\n");
+        printf("5. Consultar factura por cédula\n");
+        printf("6. Salir\n");
         printf(">> ");
         scanf("%d", &opcion);
-        if (opcion < 1 || opcion > 5) {
-            printf("Por favor, ingrese una opción valida.\n");
+        if (opcion < 1 || opcion > 6) {
+            printf("Por favor, ingrese una opción válida.\n");
         }
-    } while (opcion < 1 || opcion > 5);
+    } while (opcion < 1 || opcion > 6);
     return opcion;
 }
 
@@ -251,4 +253,55 @@ void exportarFacturas() {
     printf("Facturas exportadas exitosamente a facturas_exportadas.txt\n");
     fclose(file);
     fclose(txtFile);
+}
+
+void mostrarDetalleFactura() {
+    FILE *file = fopen("factura.dat", "rb");
+    struct Factura factura;
+    int cedulaBuscar;
+    int encontrado = 0;
+
+    if (file == NULL) {
+        printf("Error al abrir el archivo\n");
+        return;
+    }
+
+    do {
+        printf("Ingrese la cédula de la factura que desea consultar: ");
+        scanf("%d", &cedulaBuscar);
+        if (cedulaBuscar < 0) {
+            printf("La cédula no puede ser negativa. Inténtelo de nuevo.\n");
+        }
+    } while (cedulaBuscar < 0);
+
+    while (fread(&factura, sizeof(struct Factura), 1, file)) {
+        if (factura.cedula == cedulaBuscar) {
+            printf("Factura encontrada:\n");
+            printf("Cédula del cliente: %d\n", factura.cedula);
+            printf("Nombre del cliente: %s\n", factura.nombre);
+            printf("Productos:\n");
+            printf("------------------------------------------------------------\n");
+            printf("Nombre\t\tCantidad\tPrecio Unitario\tSubtotal\n");
+            printf("------------------------------------------------------------\n");
+
+            for (int i = 0; i < factura.numProductos; i++) {
+                float subtotal = factura.productos[i].cantidad * factura.productos[i].precio;
+                printf("%s\t\t%d\t\t%.2f\t\t%.2f\n", 
+                    factura.productos[i].nombre, 
+                    factura.productos[i].cantidad, 
+                    factura.productos[i].precio, 
+                    subtotal);
+            }
+            printf("------------------------------------------------------------\n");
+            printf("Total de la factura: %.2f\n", factura.total);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    fclose(file);
+
+    if (!encontrado) {
+        printf("Factura con cédula %d no encontrada.\n", cedulaBuscar);
+    }
 }

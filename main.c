@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include "funciones.h"
-
 int main() {
     int opcion;
     do {
@@ -19,6 +16,9 @@ int main() {
                 eliminarFactura();
                 break;
             case 5:
+                mostrarDetalleFactura();
+                break;
+            case 6:
                 printf("Exportando facturas...\n");
                 exportarFacturas();
                 printf("Saliendo del programa...\n");
@@ -26,7 +26,7 @@ int main() {
             default:
                 printf("Opción no válida.\n");
         }
-    } while (opcion != 5);
+    } while (opcion != 6);
 
     return 0;
 }
